@@ -1,0 +1,22 @@
+node('ubuntu3') {
+    stage("checkout") {
+        //Using the Pretested integration plugin to checkout out any branch in the ready namespace
+        checkout(
+            [$class: 'GitSCM', 
+            branches: [[name: '*/master/**']], 
+            doGenerateSubmoduleConfigurations: false, 
+            extensions: [[$class: 'CleanBeforeCheckout'], 
+            pretestedIntegration(gitIntegrationStrategy: squash(), 
+            integrationBranch: 'deployment', 
+            repoName: 'origin')], 
+            submoduleCfg: [], 
+            userRemoteConfigs: [[credentialsId: 'krohmium-1', //remember to change credentials and url.
+            url: 'git@github.com:Krohmium/ca-project.git']]])
+    }
+    stage("deployment"){
+	sh 'docker-compose uo
+        sh 'docker container run -u "$(id -u):$(id -g)" -p 5000:5000 krohmium/codechan python /usr/src/ca-project/tests.py' 
+
+    }
+}
+
