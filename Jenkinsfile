@@ -14,7 +14,7 @@ node('ubuntu3') {
             url: 'git@github.com:Krohmium/ca-project.git']]])
     }
     stage("test"){
-        sh 'docker container run -u "$(id -u):$(id -g)" -p 5000:5000 krohmium/codechan python /usr/src/ca-project/tests.py' 
+        sh 'docker container run -u "$(id -u):$(id -g)" -p 5000:5000 krohmium/ca-project-auto-build python /usr/src/ca-project/tests.py' 
 
     }
     stage("publish"){
