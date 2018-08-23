@@ -11,7 +11,7 @@ ADD . /home/ubuntu/ca-project
 RUN pip install --no-cache-dir -r /home/ubuntu/ca-project/requirements.txt
 
 # Declare the port number the container should expose
-EXPOSE 5000
+EXPOSE 6000
 
 # Run the application
 CMD ["python", "/home/ubuntu/ca-project/run.py"]

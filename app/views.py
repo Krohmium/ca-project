@@ -14,7 +14,7 @@ def index():
         post = Post(user_name=form.user_name.data, timestamp=datetime.utcnow(),title=form.title.data, body=form.body.data)
         db.session.add(post)
         db.session.commit()
-        flash('Your post is now live!')
+        flash('Your post is now livid!')
         return redirect(url_for('index'))
 
     posts = Post.query.all()
