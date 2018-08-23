@@ -15,8 +15,9 @@ node('ubuntu3') {
             url: 'git@github.com:Krohmium/ca-project.git']]])
     }
     stage("test"){
-        sh 'docker container run -u "$(id -u):$(id -g)" -p 6000:5000 krohmium/codechan python /usr/src/ca-project/tests.py' 
-
+        sh 'docker container run -u "$(id -u):$(id -g)" --name "hopsala" -p 6000:5000 krohmium/codechan python /usr/src/ca-project/tests.py' 
+	sh 'docker logs -f --until=20s > log.txt hopsala'
+	stash includes: 'log.txt', name: 'log'
     }
     stage("publish"){
         //This publishes the commit if the tests have run without errors
@@ -24,5 +25,11 @@ node('ubuntu3') {
 
     }
 }
+node {
+    stage("artifacts"){
+	unstash 'log'
+	archiveArtifacts artifacts: 'log.txt', allowEmptyArchive: true
 
+    }
+}
 
