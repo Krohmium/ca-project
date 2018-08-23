@@ -1,3 +1,4 @@
+
 node('ubuntu3') {
     stage("checkout") {
         //Using the Pretested integration plugin to checkout out any branch in the ready namespace
@@ -14,7 +15,7 @@ node('ubuntu3') {
             url: 'git@github.com:Krohmium/ca-project.git']]])
     }
     stage("test"){
-        sh 'docker container run -u "$(id -u):$(id -g)" -p 6000:5000 krohmium/ca-project-auto-build python /usr/src/ca-project/tests.py' 
+        sh 'docker container run -u "$(id -u):$(id -g)" -p 6000:5000 krohmium/codechan python /usr/src/ca-project/tests.py' 
 
     }
     stage("publish"){
@@ -23,4 +24,5 @@ node('ubuntu3') {
 
     }
 }
+
 
