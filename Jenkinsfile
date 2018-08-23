@@ -27,7 +27,7 @@ node {
     stage('test'){
 //          unstash 'repo'
 //          unstash 'build-result'
-        sh 'docker container run -u "$(id -u):$(id -g)" -p 5000:5000 -v $PWD:/usr/src/ca-project -w /usr/src/ca-project --rm "python test.py" krohmium/codechan 
+        sh 'docker container run -u "$(id -u):$(id -g)" -p 5000:5000 krohmium/codechan python /usr/src/ca-project/tests.py' 
 
 //          sh 'docker run -u "$(id -u):$(id -g)" -v maven-repo:/root/.m2 -v $PWD:/usr/src/mymaven -w /usr/src/mymaven --rm maven:3-jdk-8 mvn site'
     }
