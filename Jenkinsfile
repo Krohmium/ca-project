@@ -7,16 +7,6 @@ node {
         checkout scm
     }
 
-    stage('Build') {
-        // Run the maven build
-        if (isUnix()) {
-           sh 'docker run -i -u "$(id -u):$(id -g)" -v maven-repo:/root/.m2 -v $PWD:/usr/src/mymaven -w /usr/src/mymaven --rm maven:3-jdk-8 mvn clean test install'
-            //sh "mvn -Dmaven.test.failure.ignore clean package"
-            stash name: "build-result", includes: "target/**"
-  
-        }
-    }
-
 //    stage('Push'){
 //        pretestedIntegrationPublisher()
 
