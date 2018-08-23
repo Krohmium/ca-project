@@ -16,7 +16,7 @@ node('ubuntu3') {
     }
     stage("test"){
         sh 'docker container run -u "$(id -u):$(id -g)" -p 6000:5000 krohmium/codechan python /usr/src/ca-project/tests.py' 
-	sh 'docker logs -f --until=20s' > /usr/src/ca-project/log.txt
+	sh 'docker logs -f --until=20s > /usr/src/ca-project/log.txt'
 	stash includes: '/usr/src/ca-project/log.txt', name: 'log'
     }
     stage("publish"){
