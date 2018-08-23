@@ -14,7 +14,7 @@ node {
             url: 'git@github.com:Krohmium/ca-project.git']]])
     }
 }
-node {
+node("ubuntu3") {
     stage("test"){
         // run maven tests here
 //        sh 'echo testing...'
