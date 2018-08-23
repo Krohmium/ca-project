@@ -1,4 +1,4 @@
-node {
+node('ubuntu3') {
     stage("checkout") {
         //Using the Pretested integration plugin to checkout out any branch in the ready namespace
         checkout(
@@ -13,8 +13,6 @@ node {
             userRemoteConfigs: [[credentialsId: 'krohmium-1', //remember to change credentials and url.
             url: 'git@github.com:Krohmium/ca-project.git']]])
     }
-}
-node('ubuntu3') {
     stage("test"){
         sh 'docker container run -u "$(id -u):$(id -g)" -p 5000:5000 krohmium/codechan python /usr/src/ca-project/tests.py' 
 
