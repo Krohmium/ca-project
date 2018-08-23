@@ -1,29 +1,29 @@
-
 node {
-  //cleanWs()
-
-    stage('Preparation') { // for display purposes
-        // Get some code from a GitHub repository
-        checkout scm
+    stage("checkout") {
+        //Using the Pretested integration plugin to checkout out any branch in the ready namespace
+        checkout(
+            [$class: 'GitSCM', 
+            branches: [[name: '*/ready/**']], 
+            doGenerateSubmoduleConfigurations: false, 
+            extensions: [[$class: 'CleanBeforeCheckout'], 
+            pretestedIntegration(gitIntegrationStrategy: squash(), 
+            integrationBranch: 'master', 
+            repoName: 'origin')], 
+            submoduleCfg: [], 
+            userRemoteConfigs: [[credentialsId: 'krohmium-1', //remember to change credentials and url.
+            url: 'git@github.com:Krohmium/ca-project.git']]])
     }
-
-//    stage('Push'){
-//        pretestedIntegrationPublisher()
-
-//        deleteDir()
-//    }
-  }
-  node {  
-    stage('test'){
-//          unstash 'repo'
-//          unstash 'build-result'
+}
+node {
+    stage("test"){
+        // run maven tests here
+        sh 'echo testing...'
         sh 'docker container run -u "$(id -u):$(id -g)" -p 5000:5000 krohmium/codechan python /usr/src/ca-project/tests.py' 
 
-//          sh 'docker run -u "$(id -u):$(id -g)" -v maven-repo:/root/.m2 -v $PWD:/usr/src/mymaven -w /usr/src/mymaven --rm maven:3-jdk-8 mvn site'
     }
-//    stage('Results') {
-//            junit '**/target/surefire-reports/TEST-*.xml'
-//            archiveArtifacts 'target/*.jar'
-       
-//    }
+    stage("publish"){
+        //This publishes the commit if the tests have run without errors
+        pretestedIntegrationPublisher()
+	
+    }
 }
