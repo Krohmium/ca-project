@@ -5,7 +5,7 @@ Have fun, automate and be awesome!
 
 The project can be run by 1-3 persons in a team.
 
-## Setup
+## Setub
 
 Fork this repository so you can make changes to it:
 
