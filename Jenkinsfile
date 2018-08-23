@@ -16,8 +16,6 @@ node {
 }
 node('ubuntu3') {
     stage("test"){
-        // run maven tests here
-        sh 'echo testing...'
         sh 'docker container run -u "$(id -u):$(id -g)" -p 5000:5000 krohmium/codechan python /usr/src/ca-project/tests.py' 
 
     }

@@ -1,11 +1,11 @@
-# Keystone project
+# Keystone project!
 
 This project is meant for you to make awesome software, with the skills in your Continuous Delivery and DevOps toolbox.
 Have fun, automate and be awesome!
 
 The project can be run by 1-3 persons in a team.
 
-## Setup
+## Setub
 
 Fork this repository so you can make changes to it:
 
