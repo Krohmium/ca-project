@@ -39,5 +39,9 @@ node {
 	archiveArtifacts artifacts: 'log.txt', allowEmptyArchive: true
 
     }
+    stage("builddocker") {
+	sh 'docker build -t krohmium/codechanauto .'
+	sh 'docker push krohmium/codechanauto' 
+    }
 }
 
