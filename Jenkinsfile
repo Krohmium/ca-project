@@ -1,4 +1,3 @@
-
 node('ubuntu3') {
     stage("checkout") {
         //Using the Pretested integration plugin to checkout out any branch in the ready namespace
@@ -15,9 +14,17 @@ node('ubuntu3') {
             url: 'git@github.com:Krohmium/ca-project.git']]])
     }
     stage("test"){
-	sh 'timestamp=$(date +%s)'
-	sh 'docker logs -f --until=20s > log.txt hopsala$timestamp'
-        sh 'docker container run -u "$(id -u):$(id -g)" --name "hopsala$timestamp" -p 6000:5000 krohmium/codechan python /usr/src/ca-project/tests.py' 
+//	sh 'timestamp=$(date +%s)'
+	try {
+	    sh 'docker rm --force hopsala'
+	}
+	catch(exc) {
+	    sh 'echo no container deleted'
+	}
+
+
+        sh 'docker container run -u "$(id -u):$(id -g)" --name "hopsala" -p 6000:5000 krohmium/codechan python /usr/src/ca-project/tests.py' 
+	sh 'docker logs -f --since=20s > log.txt hopsala'
 	stash includes: 'log.txt', name: 'log'
     }
     stage("publish"){
