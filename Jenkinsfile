@@ -18,7 +18,7 @@ node('ubuntu3') {
 	try {
 	    sh 'docker rm --force hopsala'
 	}
-	catch {
+	catch(exc) {
 	    sh 'echo no container deleted'
 	}
 
