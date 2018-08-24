@@ -1,4 +1,3 @@
-
 node('ubuntu3') {
     stage("checkout") {
         //Using the Pretested integration plugin to checkout out any branch in the ready namespace
