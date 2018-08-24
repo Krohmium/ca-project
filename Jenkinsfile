@@ -15,8 +15,9 @@ node('ubuntu3') {
     }
     stage("test"){
 //	sh 'timestamp=$(date +%s)'
-	sh 'docker logs -f --until=20s > log.txt hopsala$RANDOM'
-        sh 'docker container run -u "$(id -u):$(id -g)" --name "hopsala$RANDOM" -p 6000:5000 krohmium/codechan python /usr/src/ca-project/tests.py' 
+	sh 'docker rm --force hopsala'
+	sh 'docker logs -f --until=20s > log.txt hopsala'
+        sh 'docker container run -u "$(id -u):$(id -g)" --name "hopsala" -p 6000:5000 krohmium/codechan python /usr/src/ca-project/tests.py' 
 	stash includes: 'log.txt', name: 'log'
     }
     stage("publish"){
